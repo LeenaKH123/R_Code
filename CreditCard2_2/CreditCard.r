@@ -4,7 +4,10 @@
 # }
 
 # print(dataset)
+# credit_card_data
+# credit_card_data-headers
 install.packages("pacman")
 pacman::p_load(kernlab, kknn)
-data <- read.table(file = "\\home\\lilo\\rcode\\CreditCard2_2\\credit_card-headers.txt", header = TRUE, sep=" ")
-# dataset = read.csv('/home/lilo/rcode/CreditCard2_2/credit_card_data.txt')
+# df <- read.csv('./credit_card_data-headers.txt') -- not working
+df = read.table('/home/lilo/rcode/CreditCard2_2/credit_card_data-headers.txt', header = TRUE) 
+print(df)
