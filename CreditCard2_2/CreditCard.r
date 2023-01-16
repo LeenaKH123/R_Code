@@ -27,3 +27,10 @@ cat("\n")
 cvalues <- as.list(c(10^(-5:5)))
 cat("C values range is from: ", min(unlist(cvalues)))
 cat(" to: ", max(unlist(cvalues)))
+#running a loop with cvalues
+for (cvaluescounter in cvalues){
+    #print(cvaluescounter) checking this value
+    CardModel <- ksvm(x=as.matrix(CardData[,1:10]),y=as.factor(CardData[,11]),scaled=T,type="C-svc",kernel="vanilladot",C=cvaluescounter)
+    
+
+}
