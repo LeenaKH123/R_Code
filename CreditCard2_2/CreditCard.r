@@ -1,24 +1,17 @@
-# plot(iris)
-# for(i in 1:10){
-#     print("this is awesome")
-# }
-
-# print(dataset)
-# credit_card_data
-# credit_card_data-headers
 # install.packages("pacman")
 pacman::p_load(kernlab, kknn)
 
 # df <- read.csv('./credit_card_data-headers.txt') -- not working
 # step 1: import the dataset
-df = read.table('/home/lilo/rcode/CreditCard2_2/credit_card_data-headers.txt', header = TRUE) 
+CardData <- read.table('/home/lilo/rcode/CreditCard2_2/credit_card_data-headers.txt', header = TRUE) 
+# print(CardData) -- I have the date
 # call ksvm.  Vanilladot is a simple linear kernel.
-model <- ksvm(df[,1:10],df[,11],type="C-svc",kernel="vanilladot",C=100,scaled=TRUE)
+CardModel <- ksvm(x=as.matrix(CardData[,1:10]),y=as.factor(CardData[,11]),scaled=T,type="C-svc",kernel="vanilladot",C=100)
 # calculate a1…am
-# a <- colSums(model@xmatrix[[1]] * model@coef[[1]])
+a <- colSums(CardModel@xmatrix[[1]] * CardModel@coef[[1]])
 # a
 # # calculate a0
-# a0 <- –model@b
+a0 <- CardModel@b
 # a0
 # # see what the model predicts
 # pred <- predict(model,data[,1:10])
