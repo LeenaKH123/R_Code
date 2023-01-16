@@ -31,6 +31,5 @@ cat(" to: ", max(unlist(cvalues)))
 for (cvaluescounter in cvalues){
     #print(cvaluescounter) checking this value
     CardModel <- ksvm(x=as.matrix(CardData[,1:10]),y=as.factor(CardData[,11]),scaled=T,type="C-svc",kernel="vanilladot",C=cvaluescounter)
-    
-
-}
+    cat(CardModel)
+    }
