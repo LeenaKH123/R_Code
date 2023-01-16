@@ -1,6 +1,5 @@
 # install.packages("pacman")
 pacman::p_load(kernlab, kknn)
-
 # df <- read.csv('./credit_card_data-headers.txt') -- not working
 # step 1: import the dataset
 CardData <- read.table('/home/lilo/rcode/CreditCard2_2/credit_card_data-headers.txt', header = TRUE) 
@@ -9,12 +8,11 @@ CardData <- read.table('/home/lilo/rcode/CreditCard2_2/credit_card_data-headers.
 CardModel <- ksvm(x=as.matrix(CardData[,1:10]),y=as.factor(CardData[,11]),scaled=T,type="C-svc",kernel="vanilladot",C=100)
 # calculate a1…am
 a <- colSums(CardModel@xmatrix[[1]] * CardModel@coef[[1]])
-# a
-# # calculate a0
+cat("a = ", a)
 a0 <- CardModel@b
-# a0
-# # see what the model predicts
-# pred <- predict(model,data[,1:10])
+cat("The value of a0 = ", a0)
+# see what the model predicts
+pred <- predict(CardModel,CardData[,1:10])
 # pred
 # # see what fraction of the model’s predictions match the actual classification
 # sum(pred == data[,11]) / nrow(data)
