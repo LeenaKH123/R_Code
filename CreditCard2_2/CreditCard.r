@@ -19,19 +19,11 @@ cat("\n")
 pred <- predict(CardModel,CardData[,1:10])
 # pred
 # # see what fraction of the model’s predictions match the actual classification
-validateaccuracy = sum(pred == CardData[,11]) / nrow(CardData)
+validateaccuracy <- sum(pred == CardData[,11]) / nrow(CardData)
 # print accuracy
 cat("Accuracy =", validateaccuracy)
 cat("\n")
-
-# step 2: select the dataset columns
-# df <- df[2:4]
-# print(df)
-# str(df)
-# summary(df)
-# library(kernlab)
-# c.train = df[(1:490), ]
-# c.test = df[(1:164), ]
-# model = ksvm(data=c.train,
-            #  strength = A1+A2,
-            #  kernel="vanilladot") 
+# define a range for c values
+cvalues <- as.list(c(10^(-5:5)))
+cat("C values range is from: ", min(unlist(cvalues)))
+cat(" to: ", max(unlist(cvalues)))
