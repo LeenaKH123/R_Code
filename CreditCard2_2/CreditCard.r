@@ -39,3 +39,14 @@ for (cvaluescounter in cvalues){
     cat("Accuracy is: ", validateaccuracy)
     cat(" for C value = ",cvaluescounter )
     }
+# the model with C value = 0.01 that has the best accuracy
+CardModel <- ksvm(x=as.matrix(CardData[,1:10]),y=as.factor(CardData[,11]),scaled=T,type="C-svc",kernel="vanilladot",C=0.01)
+# calculate a1…am
+a <- colSums(CardModel@xmatrix[[1]] * CardModel@coef[[1]])
+#printing the value of a
+cat("a = ", a)
+a0 <- CardModel@b
+cat("\n")
+# # printing the value of a0
+cat("The value of a0 = ", a0)
+cat("\n")
