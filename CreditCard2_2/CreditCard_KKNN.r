@@ -7,11 +7,5 @@ CardData <- read.table('/home/lilo/rcode/CreditCard2_2/credit_card_data-headers.
 # ****** KKNN ********
 # step one sample the data
 # install.packages('caret')
-head(data)
-library(caret)
-trainingData <- createDataPartition(y = CardData$R1, p = 0.70, list = F)
-# str(trainingData)
-# train_data <- data(trainingData, )
-dim(trainingData)
-remaining_data <- data(-trainingData, )
-# dataPartTwo <- createDataPartition(y=remaining_data$R1, p=0.30, list = F)
+head(CardData)
+# print(head(CardData)) --> A1, A2, A3, A8, A9, A10, A11, A12, A14, A15, R1
