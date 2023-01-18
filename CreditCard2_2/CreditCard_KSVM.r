@@ -4,7 +4,7 @@ pacman::p_load(kernlab, kknn)
 rm(list = ls())
 set.seed(123)
 CardData <- read.table('/home/lilo/rcode/CreditCard2_2/credit_card_data-headers.txt', header = TRUE) 
-# print(CardData) -- I have the date
+# print(CardData) -- I have the data
 # call ksvm.  Vanilladot is a simple linear kernel.
 # CardModel <- ksvm(x=as(CardData[,1:10]),data = CardModel,type="C-svc",kernel="vanilladot",C=100, scaled=TRUE)
 CardModel <- ksvm(x=as.matrix(CardData[,1:10]),y=as.factor(CardData[,11]),scaled=T,type="C-svc",kernel="vanilladot",C=100)

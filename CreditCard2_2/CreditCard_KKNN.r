@@ -10,15 +10,15 @@ CardData <- read.table('/home/lilo/rcode/CreditCard2_2/credit_card_data-headers.
  check_accuracy <- function(M){
    predicted <- rep(0,(nrow(CardData)))
    for (i in 1:nrow(CardData)){
-      model=kknn(R1~A1+A2+A3+A8+A9+A10+A11+A12+A14+A15,CardData[-i,],CardData[i,],k=M, scale = TRUE) # use scaled data
-     predicted[i] <- as.integer(fitted(model) + 0.5)
+      modelKKNN=kknn(R1~A1+A2+A3+A8+A9+A10+A11+A12+A14+A15,CardData[-i,],CardData[i,],k=M, scale = TRUE) # use scaled data
+     predicted[i] <- as.integer(fitted(modelKKNN) + 0.5)
    }
-   accuracy <- sum(predicted == CardData[,11]) / nrow(CardData)
-  return(accuracy)
+   accuracyequation <- sum(predicted == CardData[,11]) / nrow(CardData)
+  return(accuracyequation)
  }
 
- acc <- rep(0,20) # set up a vector of 20 zeros to start
+ accvector <- rep(0,20) # set up a vector of 20 zeros to start
  for (M in 2:20){
-   acc[M] <- (check_accuracy(M)) # test knn with X neighbors
+   accvector[M] <- (check_accuracy(M)) # test knn with X neighbors
   }
-  print(acc)
+  print(accvector)
