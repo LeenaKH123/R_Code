@@ -17,8 +17,8 @@ CardData <- read.table('/home/lilo/rcode/CreditCard2_2/credit_card_data-headers.
   return(accuracyequation)
  }
 
- accvector <- rep(0, 20) # initialise a vector
- for (M in 1:20){
-   accvector[M] <- (accuracyfunction(M)) # test knn with X neighbors
+ accvector <- rep(0, 30)
+ for (M in 1:30){
+   accvector[M] <- (accuracyfunction(M))
   }
   print(accvector)
