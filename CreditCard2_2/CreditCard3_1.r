@@ -18,4 +18,8 @@ training_data <- sample(nrow(CardData), size = floor(nrow(CardData) * 0.7))
 
 # creating a matrix data set with the training data
 creditcard_training <- CardData[training_data,]
-print(creditcard_training)
+# print(creditcard_training) # printing the training data in a matrix
+
+# put the remaining data in another matrix
+creditcard_test_validation <- CardData[-training_data,]
+# print(creditcard_test_validation) # printing the remaining data in a matrix
