@@ -7,7 +7,7 @@ pacman::p_load(kernlab, kknn)
 # step 1: import the dataset
 rm(list = ls())
 set.seed(123)
-CardData <- read.table('/home/lilo/rcode/CreditCard2_2/credit_card_data-headers.txt', header = TRUE) 
+CardData <- read.table('/home/lilo/rcode/CreditCard2_2/credit_card_data.txt', header = FALSE) 
 # head(CardData, 5)
 # print(head(CardData, 5))
 # Splitting the data into training, test and validation
@@ -29,9 +29,11 @@ half_test_validate = sample(nrow(creditcard_test_validation), size = floor(nrow(
 # put half_test_validate in two matrices
 # validation matrix
 creditcard_validation <- creditcard_test_validation[half_test_validate,] 
-print("validation matrix is: ")
-print(creditcard_validation)
+# print("validation matrix is: ")
+# print(creditcard_validation)
 # Test matrix
 creditcard_test <- creditcard_test_validation[-half_test_validate,]
-print("Test matrix is: ")
-print(creditcard_test)
+# print("Test matrix is: ")
+# print(creditcard_test)
+model1 <- train.kknn(as.factor(V11)~V1+V2+V3+V4+V5+V6+V7+V8+V9+V10, data = creditcard_training, kmax = 70, scale = TRUE)
+print(model1)
