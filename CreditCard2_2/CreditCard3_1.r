@@ -36,4 +36,9 @@ creditcard_test <- creditcard_test_validation[-half_test_validate,]
 # print("Test matrix is: ")
 # print(creditcard_test)
 model1 <- train.kknn(as.factor(V11)~V1+V2+V3+V4+V5+V6+V7+V8+V9+V10, data = creditcard_training, kmax = 70, scale = TRUE)
-print(model1)
+# print(model1)
+# minimial misclassification: 0.1444201
+# best kernel: optimal
+# best k = 10
+# create a vector of zeros with the size of the training data matrix
+PredictWithTrainingData <- rep(0,(nrow(creditcard_training)))
