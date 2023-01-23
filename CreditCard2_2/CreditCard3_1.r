@@ -42,3 +42,14 @@ model1 <- train.kknn(as.factor(V11)~V1+V2+V3+V4+V5+V6+V7+V8+V9+V10, data = credi
 # best k = 10
 # create a vector of zeros with the size of the training data matrix
 PredictWithTrainingData <- rep(0,(nrow(creditcard_training)))
+# initialise a variable with zero to use it in summing the predictions later
+TrainPredictionSum <- 0
+
+for (i in 1:nrow(creditcard_training)){
+  model2=kknn(V11~V1+V2+V3+V4+V5+V6+V7+V8+V9+V10,creditcard_training[-i,],creditcard_training[i,],k = 10,kernel="optimal", scale = TRUE) 
+  PredictWithTrainingData[i]<- as.integer(fitted(model2)+0.5) # round off to 0 or 1 and store predicted values in vector
+}
+
+# calculate fraction of correct predictions to find accuracy
+train_accuracy<- sum(PredictWithTrainingData == creditcard_training[,11]) / nrow(creditcard_training)
+print(train_accuracy)
