@@ -53,3 +53,5 @@ for (i in 1:nrow(creditcard_training)){
 # calculate fraction of correct predictions to find accuracy
 train_accuracy<- sum(PredictWithTrainingData == creditcard_training[,11]) / nrow(creditcard_training)
 print(train_accuracy)
+#-----------------------------------------------
+# training data to calculate accuracy with 
