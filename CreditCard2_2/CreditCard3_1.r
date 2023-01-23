@@ -23,3 +23,15 @@ creditcard_training <- CardData[training_data,]
 # put the remaining data in another matrix
 creditcard_test_validation <- CardData[-training_data,]
 # print(creditcard_test_validation) # printing the remaining data in a matrix
+
+# divide the test train data in two halfs
+half_test_validate = sample(nrow(creditcard_test_validation), size = floor(nrow(creditcard_test_validation)/2))
+# put half_test_validate in two matrices
+# validation matrix
+creditcard_validation <- creditcard_test_validation[half_test_validate,] 
+print("validation matrix is: ")
+print(creditcard_validation)
+# Test matrix
+creditcard_test <- creditcard_test_validation[-half_test_validate,]
+print("Test matrix is: ")
+print(creditcard_test)
