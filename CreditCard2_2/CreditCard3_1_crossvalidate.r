@@ -14,11 +14,11 @@ training_data <- sample(nrow(CardData), size = floor(nrow(CardData) * 0.7))
 creditcard_training <- CardData[training_data,]
 # print(creditcard_training) # printing the training data in a matrix
 # put the remaining data in another matrix
-creditcard_test_validation <- CardData[-training_data,]
+creditcard_test <- CardData[-training_data,]
 # print(creditcard_test_validation) # printing the remaining data in a matrix
 
 model1 <- train.kknn(as.factor(V11)~V1+V2+V3+V4+V5+V6+V7+V8+V9+V10, data = creditcard_training, kmax = 70, scale = TRUE)
-print(model1)
+# print(model1)
 # minimial misclassification: 0.1444201
 # best kernel: optimal
 # best k = 10
@@ -34,7 +34,18 @@ for (i in 1:nrow(creditcard_training)){
 
 # calculate fraction of correct predictions to find accuracy
 train_accuracy<- sum(PredictWithTrainingData == creditcard_training[,11]) / nrow(creditcard_training)
-print("Accuracy with training data set is: ")
-print(train_accuracy)
+# print("Accuracy with training data set is: ")
+# print(train_accuracy)
 #-----------------------------------------------
-# training data to calculate accuracy with test data set
+# calculate accuracy with test data set
+PredictWithTestData <- rep(0,(nrow(creditcard_test))) # predictions: start with a vector of all zeros
+TesPredictionSum <- 0
+
+for (i in 1:nrow(creditcard_test)){
+  model3=kknn(V11~V1+V2+V3+V4+V5+V6+V7+V8+V9+V10,creditcard_test[-i,],creditcard_test[i,],k=10,kernel="optimal", scale = TRUE) # use scaled data
+  PredictWithTestData[i]<- as.integer(fitted(model3)+0.5) # round off to 0 or 1 and store predicted values in vector
+}
+
+# calculate fraction of correct predictions
+TesPredictionSum <- sum(PredictWithTestData == creditcard_test[,11]) / nrow(creditcard_test)
+print(TesPredictionSum)
