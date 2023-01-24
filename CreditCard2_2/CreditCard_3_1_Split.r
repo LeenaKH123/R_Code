@@ -28,23 +28,47 @@ creditcard_validation <- creditcard_test_validation[half_test_validate,]
 creditcard_test <- creditcard_test_validation[-half_test_validate,]
 # print("Test matrix is: ")
 # print(creditcard_test)
-model1 <- train.kknn(as.factor(V11)~V1+V2+V3+V4+V5+V6+V7+V8+V9+V10, data = creditcard_training, kmax = 70, scale = TRUE)
-# print(model1)
-# minimial misclassification: 0.1444201
-# best kernel: optimal
-# best k = 10
-# create a vector of zeros with the size of the training data matrix
-PredictWithTrainingData <- rep(0,(nrow(creditcard_training)))
-# initialise a variable with zero to use it in summing the predictions later
-TrainPredictionSum <- 0
-
-for (i in 1:nrow(creditcard_training)){
-  model2=kknn(V11~V1+V2+V3+V4+V5+V6+V7+V8+V9+V10,creditcard_training[-i,],creditcard_training[i,],k = 10,kernel="optimal", scale = TRUE) 
-  PredictWithTrainingData[i]<- as.integer(fitted(model2)+0.5) # round off to 0 or 1 and store predicted values in vector
-}
-
-# calculate fraction of correct predictions to find accuracy
-train_accuracy<- sum(PredictWithTrainingData == creditcard_training[,11]) / nrow(creditcard_training)
-print(train_accuracy)
-#-----------------------------------------------
-# training data to calculate accuracy with 
+ accuracyfunction <- function(M){
+   predicted <- rep(0,(nrow(creditcard_training)))
+   for (i in 1:nrow(creditcard_training)){
+      modelKKNN=kknn(V11~V1+V2+V3+V4+V5+V6+V7+V8+V9+V10,creditcard_training[-i,],creditcard_training[i,],k=M,kernel="optimal", scale = TRUE) # use scaled data
+     predicted[i] <- as.integer(fitted(modelKKNN) + 0.5)
+   }
+   accuracyequation <- sum(predicted == creditcard_training[,11]) / nrow(creditcard_training)
+  return(accuracyequation)
+  }
+ accvector <- rep(0, 30)
+ for (M in 1:30){
+   accvector[M] <- (accuracyfunction(M))
+  }
+# print(accvector)
+# calculate accuracy on validation data
+# --------------------------------
+ accuracyfunction <- function(M){
+   predicted <- rep(0,(nrow(creditcard_validation)))
+   for (i in 1:nrow(creditcard_validation)){
+      modelKKNN=kknn(V11~V1+V2+V3+V4+V5+V6+V7+V8+V9+V10,creditcard_validation[-i,],creditcard_validation[i,],k=M,kernel="optimal", scale = TRUE) # use scaled data
+     predicted[i] <- as.integer(fitted(modelKKNN) + 0.5)
+   }
+   accuracyequation <- sum(predicted == creditcard_validation[,11]) / nrow(creditcard_validation)
+  return(accuracyequation)
+  }
+ accvector <- rep(0, 30)
+ for (M in 11:17){
+   accvector[M] <- (accuracyfunction(M))
+  }
+# print(accvector)
+# calculate accuracy on test data
+# ----------------------------------
+ accuracyfunction <- function(M){
+   predicted <- rep(0,(nrow(creditcard_test)))
+   for (i in 1:nrow(creditcard_test)){
+      modelKKNN=kknn(V11~V1+V2+V3+V4+V5+V6+V7+V8+V9+V10,creditcard_test[-i,],creditcard_test[i,],k=12,kernel="optimal", scale = TRUE) # use scaled data
+     predicted[i] <- as.integer(fitted(modelKKNN) + 0.5)
+   }
+   accuracyequation <- sum(predicted == creditcard_test[,11]) / nrow(creditcard_test)
+  return(accuracyequation)
+  }
+ accvector <- rep(0, 30)
+ accvector[12] <- (accuracyfunction(12))
+ print(accvector)
