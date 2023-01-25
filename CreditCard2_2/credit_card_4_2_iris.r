@@ -8,13 +8,23 @@
 # Use the R function kmeans to cluster the points as well as possible.
 # Report the best combination of predictors, your suggested value of k, and how well your best clustering predicts flower type.
 # plot(iris)
-
+# install.packages('ggplot2')
 pacman::p_load(kernlab, kknn)
 #  library (kernlab) --from office hours
 # step 1: import the dataset
 rm(list = ls())
 set.seed(123)
-data <- read.table('/home/lilo/rcode/CreditCard2_2/iris.txt', header = TRUE)
-table(data$species)
+# data <- read.table('/home/lilo/rcode/CreditCard2_2/iris.txt', header = TRUE)
+# table(data$species)
+# flowerdata <- data[training_data,]
 library(ggplot2)
-ggplot(data, aes(sepal_length, sepal_width, color = species)) + geom_point()
+# ggplot(data, aes(sepal_length, sepal_width, color = species)) + geom_point()
+
+# cluster_1 <- kmeans(data[, 1:4], centers = 2, nstart = 5)
+# cluster_2 <- kmeans(data[, 1:4], centers = 3, nstart = 10)
+# cluster_1$tot.withinss
+# table(cluster_1$cluster, data$Species)
+df <- iris
+ggplot(df, aes(Petal.Length, Petal.Width)) + geom_point(aes(col=Species), size=4)
+set.seed(101)
+irisCluster <- kmeans(df[,1:4], center=3, nstart=20)
