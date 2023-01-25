@@ -1,13 +1,3 @@
-# Question 4.2 
-# The iris data set iris.txt contains 150 data points, each with four predictor 
-# variables and one categorical response. The predictors are the width and length of the sepal and petal of 
-# flowers and the response is the type of flower. The data is available from the R library datasets and can be
-# accessed with iris once the library is loaded. It is also available at the UCI Machine Learning Repository
-# (https://archive.ics.uci.edu/ml/datasets/Iris ). The response values are only given to see how well a specific 
-# method performed and should not be used to build the model.
-# Use the R function kmeans to cluster the points as well as possible.
-# Report the best combination of predictors, your suggested value of k, and how well your best clustering predicts flower type.
-# plot(iris)
 # install.packages('ggplot2')
 pacman::p_load(kernlab, kknn)
 #  library (kernlab) --from office hours
@@ -25,14 +15,18 @@ set.seed(123)
 library(ggplot2)
 flowerdata <- iris
 p <- ggplot(flowerdata, aes(Sepal.Length, Sepal.Width, color = Species)) + geom_point()
-print(p)
+# print(p)
 cluster_1 <- kmeans(flowerdata[,1:4], center = 2, nstart = 5)
 cluster_2 <- kmeans(flowerdata[,1:4], center = 3, nstart = 10)
 cluster_3 <- kmeans(flowerdata[,1:4], center = 5, nstart = 15)
-
-# table(irisCluster$cluster, df$Species)
-# library(cluster)
-# # clusplot(iris, irisCluster$cluster, color=T, shade=T, labels=0, lines=0)
+table1 <- table(cluster_1$cluster, flowerdata <- iris$Species)
+print(table1)
+table2 <- table(cluster_2$cluster, flowerdata <- iris$Species)
+print(table2)
+table3 <- table(cluster_3$cluster, flowerdata <- iris$Species)
+print(table3)
+library(cluster)
+cluster1plot <- clusplot(iris, irisCluster$cluster, color=T, shade=T, labels=0, lines=0)
 # tot.withinss <- vector(mode="character", length=10)
 # for (i in 1:10){
 #   irisCluster <- kmeans(df[,1:4], center=i, nstart=20)
