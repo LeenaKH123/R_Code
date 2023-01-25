@@ -7,8 +7,6 @@ set.seed(123)
 CardData <- read.table('/home/lilo/rcode/CreditCard2_2/credit_card_data.txt', header = FALSE) 
 # head(CardData, 5)
 # print(head(CardData, 5))
-# Splitting the data into training, test and validation
-# 70% for training and 15% for test and another 15% for validation
 training_data <- sample(nrow(CardData), size = floor(nrow(CardData) * 0.7))
 # creating a matrix data set with the training data
 creditcard_training <- CardData[training_data,]
