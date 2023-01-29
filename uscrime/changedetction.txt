@@ -1,0 +1,2 @@
+Describe a situation or problem from your job, everyday life, current events, etc., 
+for which a Change Detection model would be appropriate. Applying the CUSUM technique, how would you choose the critical value and the threshold?
