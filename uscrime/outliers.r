@@ -11,3 +11,4 @@ crimeDate = read.table("/home/lilo/rcode/uscrime/uscrime.txt", header= TRUE, str
 grubbs.result <- grubbs.test(crimeDate$Crime)
 pvalue <- grubbs.result$p.value
 grubbs.result
+plot(crimeDate$Crime)
