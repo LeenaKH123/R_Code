@@ -2,7 +2,7 @@
 library(outliers)
 crimeDate = read.table("/home/lilo/rcode/uscrime/uscrime.txt", header= TRUE, stringsAsFactors = F) 
 # head(crimeDate)
-# hist(crimeDate[,16], breaks = 5)
+hist(crimeDate[,16], breaks = 5)
 # which.max(crimeDate$Crime)
 # which.min(crimeDate$Crime)
 # summary(crimeDate$Crime)
