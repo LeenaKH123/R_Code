@@ -14,5 +14,21 @@ for (i in 1:123) {
   day_mean[i] <- mean(unlist(tempData[i, 2:21]))
 }
 df_mean <- data.frame(day = unlist(tempData[0:123,1]), day.mean)
-print(df_mean)
+# print(df_mean)
 # plot(x = 1:123, df_mean$day.mean,col="purple")
+q4 <- melt(tempData[0:20,])
+print(q4)
+
+tempratureMean <- aggregate(value~variable, q4, mean)
+# print(tempratureMean)
+tempratureStandardDev <- aggregate(value~variable, q4, sd)
+print(tempratureStandardDev)
+# temp.mean <- aggregate(value~variable, meltdata, mean)
+# temp.sd <- aggregate(value~variable, meltdata, sd)
+# temp.median <- aggregate(value~variable, meltdata, median)
+# yoy.stats <- data.frame(YEAR = temp.mean$variable,
+#                        Median = temp.median$value,
+#                        MEAN = temp.mean$value,
+#                        SD = temp.sd$value)
+
+# print(yoy.stats)
