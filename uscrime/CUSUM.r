@@ -13,7 +13,7 @@ day_mean <- rep(0,123)
 for (i in 1:123) {
   day_mean[i] <- mean(unlist(tempData[i, 2:21]))
 }
-df_mean <- data.frame(day = unlist(tempData[0:123,1]), day.mean)
+df_mean <- data.frame(day = unlist(tempData[0:123,1]), day_mean)
 # print(df_mean)
 # plot(x = 1:123, df_mean$day.mean,col="purple")
 q4 <- melt(tempData[0:20,])
@@ -23,11 +23,8 @@ tempratureMean <- aggregate(value~variable, q4, mean)
 tempratureStandardDev <- aggregate(value~variable, q4, sd)
 # print(tempratureStandardDev)
 tempratureMedian <- aggregate(value~variable, q4, median)
-print(tempratureMedian)
-# temp.median <- aggregate(value~variable, meltdata, median)
-# yoy.stats <- data.frame(YEAR = temp.mean$variable,
-#                        Median = temp.median$value,
-#                        MEAN = temp.mean$value,
-#                        SD = temp.sd$value)
-
-# print(yoy.stats)
+# print(tempratureMedian)
+yearlyStatistics <- data.frame(YEAR = tempratureMean$variable, Median = tempratureMedian$value, MEAN = tempratureMedian$value, SD = tempratureStandardDev$value)
+# print(yearlyStatistics)
+# plot(x = 1996:2015, tempratureMean$value, type="p",col="blue", main = "Average temprature of the first 62 days")
+plot(x = 1996:2015, tempratureMedian$value, type="p",col="red", main = "Median temprature of the first 62 days")
