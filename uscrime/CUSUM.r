@@ -46,6 +46,11 @@ for (i in 1:(ncol(tempData)-1)){
 }
 print(cusum_matrix_vio[,1:2])
 plot(as.Date(cusum_matrix_vio[,2],"%d-%B"), x = 1996:2015,
-     main = "First day when weather starts cooling off",
+     main = "First day when weather starts cooling",
      xlab = "Years",
      ylab = "Dates")
+plot(tempData[,11], x = as.Date(tempData[,1],"%d-%B" ),
+     main = "weather starts cooling off",
+     xlab = "Date",
+     ylab = "Temp")
+abline(v=as.Date("23-Sep","%d-%B"), col="red")
