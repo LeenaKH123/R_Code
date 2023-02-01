@@ -54,3 +54,6 @@ plot(tempData[,11], x = as.Date(tempData[,1],"%d-%B" ),
      xlab = "Date",
      ylab = "Temp")
 abline(v=as.Date("23-Sep","%d-%B"), col="red")
+mean.average <- mean(tempratureMean$value)
+mean.sd <- sd(tempratureMean$value)
+plot(tempratureMean$value, x = 1996:2015,type="l")
