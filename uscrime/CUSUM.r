@@ -39,8 +39,8 @@ for (i in 1:(ncol(tempData)-1)){
                             se.shift = 0.5 * mean(tempratureStandardDev$value) ,
                             plot = T,
                             add.stats = T)
-  v.index <- cusum_model$violations$lower
+  lower_index <- cusum_model$violations$lower
   cusum_matrix_vio[i,] <- c(YEAR = colnames(tempData)[i+1],
-                                  Start = tempData[min(v.index),1],
-                                  MedianS = tempData[median(v.index),1])
+                                  Start = tempData[min(lower_index),1],
+                                  MedianS = tempData[median(lower_index),1])
 }
