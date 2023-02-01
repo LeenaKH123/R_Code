@@ -45,3 +45,7 @@ for (i in 1:(ncol(tempData)-1)){
                                   MedianS = tempData[median(lower_index),1])
 }
 print(cusum_matrix_vio[,1:2])
+plot(as.Date(cusum_matrix_vio[,2],"%d-%B"), x = 1996:2015,
+     main = "First day when weather starts cooling off",
+     xlab = "Years",
+     ylab = "Dates")
