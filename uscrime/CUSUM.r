@@ -35,8 +35,8 @@ for (i in 1:(ncol(tempData)-1)){
   cusum_model <- cusum(tempData[,i+1], 
                             center = mean(tempratureMean$value),
                             std.dev = mean(tempratureStandardDev$value),
-                            decision.interval= 3 * mean(tempratureStandardDev$value), 
-                            se.shift = 0.5 * mean(tempratureStandardDev$value) ,
+                            decision.interval= 4 * mean(tempratureStandardDev$value), 
+                            se.shift = 0.4 * mean(tempratureStandardDev$value) ,
                             plot = T,
                             add.stats = T)
   lower_index <- cusum_model$violations$lower
@@ -44,3 +44,4 @@ for (i in 1:(ncol(tempData)-1)){
                                   Start = tempData[min(lower_index),1],
                                   MedianS = tempData[median(lower_index),1])
 }
+print(cusum_matrix_vio[,1:2])
