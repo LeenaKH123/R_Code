@@ -30,23 +30,17 @@ yearlyStatistics <- data.frame(YEAR = tempratureMean$variable, Median = tempratu
 # plot(x = 1996:2015, tempratureMedian$value,col="red", main = "Median temprature of the first 62 days")
 # install.packages("qcc")
 library(qcc)
-cusum_matrix <- matrix(0, nrow=ncol(tempData) - 1, ncol=3)
-# print(cusum_matrix)
-for (i in 1:(ncol(tempData)-1))
-{CUSUM_MODEL <- cusum(tempData[,i+1], 
- center = mean(tempratureMean$value), 
- std.dev = mean(tempratureStandardDev$value), 
- decision.interval= 3 * mean(tempratureStandardDev$value),
- se.shift = 0.5 * mean(tempratureStandardDev$value), plot = T, add.stats = T)
-   # Index for lower violations
-  # This is when temperature starts to cool off
-  v.index <- CUSUM_MODEL$violations$lower
-  model.cusum.violations[i,] <- c(YEAR = colnames(tempData)[i+1],
+cusum_matrix_vio <- matrix(0, nrow=ncol(tempData) - 1, ncol=3)
+for (i in 1:(ncol(tempData)-1)){   
+  cusum_model <- cusum(tempData[,i+1], 
+                            center = mean(tempratureMean$value),
+                            std.dev = mean(tempratureStandardDev$value),
+                            decision.interval= 3 * mean(tempratureStandardDev$value), 
+                            se.shift = 0.5 * mean(tempratureStandardDev$value) ,
+                            plot = T,
+                            add.stats = T)
+  v.index <- cusum_model$violations$lower
+  cusum_matrix_vio[i,] <- c(YEAR = colnames(tempData)[i+1],
                                   Start = tempData[min(v.index),1],
                                   MedianS = tempData[median(v.index),1])
 }
-print(model.cusum.violations[,1:2])
-plot(as.Date(model.cusum.violations[,2],"%d-%B"), x = 1996:2015,
-     main = "First day when weather starts cooling off",
-     xlab = "Years",
-     ylab = "Dates")
