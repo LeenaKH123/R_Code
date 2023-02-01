@@ -54,6 +54,13 @@ plot(tempData[,11], x = as.Date(tempData[,1],"%d-%B" ),
      xlab = "Date",
      ylab = "Temp")
 abline(v=as.Date("23-Sep","%d-%B"), col="red")
-mean.average <- mean(tempratureMean$value)
-mean.sd <- sd(tempratureMean$value)
+average_mean <- mean(tempratureMean$value)
+standardDev_mean <- sd(tempratureMean$value)
 plot(tempratureMean$value, x = 1996:2015,type="l")
+cusum_matrix_vio <- matrix(0, nrow=ncol(tempratureMean) - 1, ncol=3)
+cusum_model2 <- cusum(tempratureMean$value,
+                     center = average_mean,
+                     std.dev = standardDev_mean,
+                     decision.interval= 0.75, 
+                     se.shift = 0.25, 
+                     plot = TRUE)
