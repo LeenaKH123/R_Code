@@ -44,16 +44,16 @@ for (i in 1:(ncol(tempData)-1)){
                                   Start = tempData[min(lower_index),1],
                                   MedianS = tempData[median(lower_index),1])
 }
-print(cusum_matrix_vio[,1:2])
-plot(as.Date(cusum_matrix_vio[,2],"%d-%B"), x = 1996:2015,
-     main = "First day when weather starts cooling",
-     xlab = "Years",
-     ylab = "Dates")
-plot(tempData[,11], x = as.Date(tempData[,1],"%d-%B" ),
-     main = "weather starts cooling off",
-     xlab = "Date",
-     ylab = "Temp")
-abline(v=as.Date("23-Sep","%d-%B"), col="red")
+# print(cusum_matrix_vio[,1:2])
+# plot(as.Date(cusum_matrix_vio[,2],"%d-%B"), x = 1996:2015,
+#      main = "First day when weather starts cooling",
+#      xlab = "Years",
+#      ylab = "Dates")
+# plot(tempData[,11], x = as.Date(tempData[,1],"%d-%B" ),
+#      main = "weather starts cooling off",
+#      xlab = "Date",
+#      ylab = "Temp")
+# abline(v=as.Date("23-Sep","%d-%B"), col="red")
 average_mean <- mean(tempratureMean$value)
 standardDev_mean <- sd(tempratureMean$value)
 plot(tempratureMean$value, x = 1996:2015,type="l")
@@ -64,3 +64,5 @@ cusum_model2 <- cusum(tempratureMean$value,
                      decision.interval= 0.75, 
                      se.shift = 0.25, 
                      plot = TRUE)
+index = cusum_model2$violations$upper
+print(colnames(tempData)[index + 1])
