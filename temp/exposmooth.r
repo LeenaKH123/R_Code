@@ -6,9 +6,9 @@ library("ggplot2")
 # plot(components_dfts)
 HW1 <- HoltWinters(timeseries)
 print(HW1)
-HW2 <- HoltWinters(timeseries, alpha=0.6610618, beta=0, gamma=0.6248076)
-plt.plot(timeseries, ylab="Temprature", xlim=c(1996,2018))+
-lines(HW1$fitted[,1], lty=2, col="blue")+
+HW2 <- HoltWinters(timeseries, alpha=0.1, beta=0.1, gamma=0.6248076)
+plot(timeseries, ylab="Temprature", col="purple")
+lines(HW1$fitted[,1], lty=2, col="#00ffaa")
 lines(HW2$fitted[,1], lty=2, col="red")
 
 # head(tempData)
