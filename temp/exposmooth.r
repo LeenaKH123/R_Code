@@ -28,9 +28,31 @@ par(mfrow=c(1,2))
 plot(fitted(HW1))
 plot(fitted(HW3))
 
+HW1$fitted[1:5,]
 
+# predictions
+HW1.pred <- predict(HW1, 1440, prediction.interval = TRUE, level=0.95)
+#Visually evaluate the prediction
+plot(timeseries, ylab="Temprature")
+lines(HW1.pred[,1], col="red")
 
+plot(timeseries, ylab="Temprature")
+lines(HW1.pred[,2], lty=2, col="orange")
 
+plot(timeseries, ylab="Temprature")
+lines(HW1.pred[,3], lty=2, col="orange")
+
+# predict with multiplicative seasonality
+HW3.pred <- predict(HW3, 1440, prediction.interval = TRUE, level=0.95)
+#Visually evaluate the prediction
+plot(timeseries, ylab="Temprature")
+lines(HW3.pred[,1], col="red")
+
+plot(timeseries, ylab="Temprature")
+lines(HW3.pred[,2], lty=2, col="orange")
+
+plot(timeseries, ylab="Temprature")
+lines(HW3.pred[,3], lty=2, col="orange")
 
 # head(tempData)
 # summary(tempData)
