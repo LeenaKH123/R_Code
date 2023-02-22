@@ -12,6 +12,10 @@ ggplot(df, aes(x= V1, y=V2)) + geom_point() + coord_fixed() + ggtitle("The unsca
 cor(df)
 # scale our data, center the data where we want it
 data_scaled <- as.data.frame(scale(df))
+# plot our scaled data
+ggplot(data_scaled, aes(x= V1, y=V2)) + geom_point() + coord_fixed() + ggtitle("The scaled original data")
+# run PCA and let prcomp do the scaling for us
+PCA <- prcomp(df, scale=TRUE)
 # crimeDate = read.table("/home/lilo/rcode/uscrime/uscrime.txt", header= TRUE, stringsAsFactors = F) 
 # head(crimeDate)
 # # crime_model <- lm(Crime ~ ., data = crimeData)
