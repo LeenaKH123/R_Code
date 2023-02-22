@@ -14,8 +14,13 @@ cor(df)
 data_scaled <- as.data.frame(scale(df))
 # plot our scaled data
 ggplot(data_scaled, aes(x= V1, y=V2)) + geom_point() + coord_fixed() + ggtitle("The scaled original data")
+# data has been normalised after using mean and standard deviation, mean for centering and standard deviation for scaling
 # run PCA and let prcomp do the scaling for us
 PCA <- prcomp(df, scale=TRUE)
+# plot our transformed data, note how the data has changed
+ggplot(as.data.frame(PCA$x), aes(x= PC1, y= PC2)) + geom_point() + coord_fixed() + ggtitle("The data transformed via prcomp")
+
+
 # crimeDate = read.table("/home/lilo/rcode/uscrime/uscrime.txt", header= TRUE, stringsAsFactors = F) 
 # head(crimeDate)
 # # crime_model <- lm(Crime ~ ., data = crimeData)
