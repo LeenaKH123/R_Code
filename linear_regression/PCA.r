@@ -2,8 +2,10 @@ library(MASS)
 library(ggplot2)
 set.seed(1000)
 # define the mean and the standard deviation of random data
-sigma <- rbind(c(1, -0.7), c(-0.7, 1) )
+sigma <- rbind(c(1, -0.7), c(-0.7, 1))
+mu <- c(10, 5)
+# randomly generate some multivariate data
+df <- as.data.frame(mvrnorm(n=1000, mu=mu, Sigma = sigma ))
 # crimeDate = read.table("/home/lilo/rcode/uscrime/uscrime.txt", header= TRUE, stringsAsFactors = F) 
 # head(crimeDate)
 # # crime_model <- lm(Crime ~ ., data = crimeData)
-# 
