@@ -19,7 +19,15 @@ ggplot(data_scaled, aes(x= V1, y=V2)) + geom_point() + coord_fixed() + ggtitle("
 PCA <- prcomp(df, scale=TRUE)
 # plot our transformed data, note how the data has changed
 ggplot(as.data.frame(PCA$x), aes(x= PC1, y= PC2)) + geom_point() + coord_fixed() + ggtitle("The data transformed via prcomp")
-
+# correlation coeeficient of our transformed data
+cor(PCA$x)
+# manually apply the PCA transformation using the data we scaled and the rotation matrix
+df_rotated <- as.data.frame(as.matrix(data_scaled)%*% PCA$rotation)
+#plot the manually transformed data
+ggplot(as.data.frame(PCA$x), aes(x= PC1, y= PC2)) + geom_point() + coord_fixed() + ggtitle("The data manually rotated")
+#plot our reversed data with the rotations plotted as red dashed lines
+reversed_df <- as.data.frame(PCA$x %*% t(PCA$rotation))
+reversed_plot <- ggplot(reversed_df, aes(x=V1, y=V2))+geom_point()+coord_fixed()+ggtitle("PCA Reversed with rotation plot")
 
 # crimeDate = read.table("/home/lilo/rcode/uscrime/uscrime.txt", header= TRUE, stringsAsFactors = F) 
 # head(crimeDate)
