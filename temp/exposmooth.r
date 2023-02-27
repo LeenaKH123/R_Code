@@ -3,7 +3,7 @@ timeseries<-ts(as.vector(unlist(tempData[,2:21])),start=1996,frequency=123)
 print(timeseries)
 # plot(timeseries)
 components <- decompose(timeseries)
-# plot(components)
+plot(components)
 
 set.seed(1)
 # first fit

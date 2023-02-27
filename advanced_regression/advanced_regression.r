@@ -2,12 +2,14 @@ library(tree)
 library(tidyverse)
 library(ggplot2)
 library(randomForest)
-# install.packages("tree")
-# 
-# library(caret)
 crimeDate = read.table("/home/lilo/rcode/uscrime/uscrime.txt", header= TRUE, stringsAsFactors = F)
 head(crimeDate)
 set.seed(1000)
-# build the regression model
+# a. create a regression tree model
 regression_tree <- tree(Crime~., data = crimeDate)
 summary(regression_tree)
+# plot(regression_tree)
+# text(regression_tree)
+# b: creating a random forest tree
+random_forest_tree <- randomForest(Crime ~ ., data=crimeDate, importance = TRUE, nodesize = 5)
+random_forest_prediction <- predict(random_forest_tree, data=crimeDate[,-16])
