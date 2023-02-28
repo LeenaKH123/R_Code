@@ -13,3 +13,4 @@ germanData_test <- germanData[801:1000,]
 # create a logistic regression model
 germanData_model <- glm(V21~.,family = binomial(link = "logit"),data = germanData_train)
 print(germanData_model)
+summary(germanData_model)
