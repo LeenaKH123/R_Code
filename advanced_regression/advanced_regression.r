@@ -9,8 +9,8 @@ set.seed(1000)
 # a. create a regression tree model
 regression_tree <- tree(Crime~., data = crimeDate)
 summary(regression_tree)
-# plot(regression_tree)
-# text(regression_tree)
+plot(regression_tree)
+text(regression_tree)
 # b: creating a random forest tree
 random_forest_tree <- randomForest(Crime ~ ., data=crimeDate, importance = TRUE, nodesize = 5)
 random_forest_prediction <- predict(random_forest_tree, data= crimeDate[, -16])
