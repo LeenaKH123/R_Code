@@ -9,21 +9,19 @@ class Airport(object):
         self.security = simpy.Resource(env, num_securities)
         self.server = simpy.Resource(env, num_servers)
         
-
-    def purchase_ticket(self, passenger):
+    def check_in(self, passenger):
         yield self.env.timeout(random.poisson())
-
     def check_ticket(self, passenger):
         yield self.env.timeout(random.poisson())
 
  
-def go_to_movies(env, passenger, airport):
+def go_to_airport(env, passenger, airport):
     # Passenger arrives at the airport
     arrival_time = env.now
 
     with airport.security.request() as request:
         yield request
-        yield env.process(airport.purchase_ticket(passenger))
+        yield env.process(airport.check_in(passenger))
 
   
     if random.choice([True, False]):
@@ -39,18 +37,18 @@ def run_airport(env, num_securities, num_servers):
     airport = Airport(env, num_securities, num_servers)
 
     for passenger in range(3):
-        env.process(go_to_movies(env, passenger, airport))
+        env.process(go_to_airport(env, passenger, airport))
 
     while True:
-        yield env.timeout(0.20)  # Wait a bit before generating a new person
+        yield env.timeout(0.20)  # Wait before generating a new person, using mean interarival rate
 
         passenger += 1
-        env.process(go_to_movies(env, passenger, airport))
+        env.process(go_to_airport(env, passenger, airport))
 
 
 def get_average_wait_time(wait_times):
     average_wait = statistics.mean(wait_times)
-    # Pretty print the results
+    # Print the results
     minutes, frac_minutes = divmod(average_wait, 1)
     seconds = frac_minutes * 60
     return round(minutes), round(seconds)
@@ -60,7 +58,7 @@ def get_user_input():
     num_securities = input("Input # of security personnel working: ")
     num_servers = input("Input # of servers working: ")   
     params = [num_securities, num_servers]
-    if all(str(i).isdigit() for i in params):  # Check input is valid
+    if all(str(i).isdigit() for i in params):  # Validate the input
         params = [int(x) for x in params]
     else:
         print(
