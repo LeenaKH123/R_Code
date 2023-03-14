@@ -1,6 +1,7 @@
 import simpy
 import random
 import statistics
+from numpy import random
 wait_times = []
 class Airport(object):
     def __init__(self, env, num_cashiers, num_servers):
@@ -10,10 +11,10 @@ class Airport(object):
         
 
     def purchase_ticket(self, moviegoer):
-        yield self.env.timeout(random.randint(1, 3))
+        yield self.env.timeout(random.poisson())
 
     def check_ticket(self, moviegoer):
-        yield self.env.timeout(3 / 60)
+        yield self.env.timeout(random.poisson())
 
  
 def go_to_movies(env, moviegoer, airport):
@@ -78,7 +79,7 @@ def main():
     # Run the simulation
     env = simpy.Environment()
     env.process(run_airport(env, num_cashiers, num_servers))
-    env.run(until=90)
+    env.run(until=5)
 
     # View the results
     mins, secs = get_average_wait_time(wait_times)
