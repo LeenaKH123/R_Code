@@ -10,20 +10,20 @@ class Airport(object):
         self.server = simpy.Resource(env, num_servers)
         
 
-    def purchase_ticket(self, moviegoer):
+    def purchase_ticket(self, passenger):
         yield self.env.timeout(random.poisson())
 
-    def check_ticket(self, moviegoer):
+    def check_ticket(self, passenger):
         yield self.env.timeout(random.poisson())
 
  
-def go_to_movies(env, moviegoer, airport):
+def go_to_movies(env, passenger, airport):
     # Passenger arrives at the airport
     arrival_time = env.now
 
     with airport.security.request() as request:
         yield request
-        yield env.process(airport.purchase_ticket(moviegoer))
+        yield env.process(airport.purchase_ticket(passenger))
 
   
     if random.choice([True, False]):
@@ -31,21 +31,21 @@ def go_to_movies(env, moviegoer, airport):
             yield request
            
 
-    # Moviegoer heads into the airport
+    # passenger heads into the airport
     wait_times.append(env.now - arrival_time)
 
 
 def run_airport(env, num_securities, num_servers):
     airport = Airport(env, num_securities, num_servers)
 
-    for moviegoer in range(3):
-        env.process(go_to_movies(env, moviegoer, airport))
+    for passenger in range(3):
+        env.process(go_to_movies(env, passenger, airport))
 
     while True:
         yield env.timeout(0.20)  # Wait a bit before generating a new person
 
-        moviegoer += 1
-        env.process(go_to_movies(env, moviegoer, airport))
+        passenger += 1
+        env.process(go_to_movies(env, passenger, airport))
 
 
 def get_average_wait_time(wait_times):
