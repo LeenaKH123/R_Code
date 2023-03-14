@@ -4,9 +4,9 @@ import statistics
 from numpy import random
 wait_times = []
 class Airport(object):
-    def __init__(self, env, num_cashiers, num_servers):
+    def __init__(self, env, num_securities, num_servers):
         self.env = env
-        self.cashier = simpy.Resource(env, num_cashiers)
+        self.security = simpy.Resource(env, num_securities)
         self.server = simpy.Resource(env, num_servers)
         
 
@@ -21,7 +21,7 @@ def go_to_movies(env, moviegoer, airport):
     # Passenger arrives at the airport
     arrival_time = env.now
 
-    with airport.cashier.request() as request:
+    with airport.security.request() as request:
         yield request
         yield env.process(airport.purchase_ticket(moviegoer))
 
@@ -35,8 +35,8 @@ def go_to_movies(env, moviegoer, airport):
     wait_times.append(env.now - arrival_time)
 
 
-def run_airport(env, num_cashiers, num_servers):
-    airport = Airport(env, num_cashiers, num_servers)
+def run_airport(env, num_securities, num_servers):
+    airport = Airport(env, num_securities, num_servers)
 
     for moviegoer in range(3):
         env.process(go_to_movies(env, moviegoer, airport))
@@ -57,15 +57,15 @@ def get_average_wait_time(wait_times):
 
 
 def get_user_input():
-    num_cashiers = input("Input # of cashiers working: ")
+    num_securities = input("Input # of security personnel working: ")
     num_servers = input("Input # of servers working: ")   
-    params = [num_cashiers, num_servers]
+    params = [num_securities, num_servers]
     if all(str(i).isdigit() for i in params):  # Check input is valid
         params = [int(x) for x in params]
     else:
         print(
             "Could not parse input. Simulation will use default values:",
-            "\n1 cashier, 1 server, 1 usher.",
+            "\n1 security, 1 server.",
         )
         params = [1, 1, 1]
     return params
@@ -74,11 +74,11 @@ def get_user_input():
 def main():
     # Setup
     random.seed(42)
-    num_cashiers, num_servers = get_user_input()
+    num_securities, num_servers = get_user_input()
 
     # Run the simulation
     env = simpy.Environment()
-    env.process(run_airport(env, num_cashiers, num_servers))
+    env.process(run_airport(env, num_securities, num_servers))
     env.run(until=5)
 
     # View the results
