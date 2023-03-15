@@ -46,8 +46,7 @@ def get_user_input():
         params = [int(x) for x in params]
     else:
         print(
-            "Could not parse input. Simulation will use default values:",
-            "\n1 security, 1 server.",
+            "Could not read input.",
         )
         params = [1, 1, 1]
     return params
