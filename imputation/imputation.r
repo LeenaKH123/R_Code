@@ -21,4 +21,22 @@ table(bcw_missing$V11)
 library('mice')
 set.seed(101)
 mean_impute <- mice(ImputationData, m = 5, meth = 'mean')
-
+#check the values
+mean_impute$imp
+# imputation using regression 
+regression_impute <- mice(ImputationData, m = 5, meth = 'norm.predict')
+# check the values
+regression_impute$imp
+# imputation using perturbation impute
+pert_impute <- mice(ImputationData, m = 5, meth = 'norm.nob')
+# check the values
+pert_impute$imp
+# mean impute
+mean_bcw <- complete(mean_impute)
+mean_bcw
+# regression prediction impute
+regression_bcw <- complete(regression_impute)
+regression_bcw
+# pertubation impute
+pert_bcw <- complete(pert_impute)
+pert_bcw
