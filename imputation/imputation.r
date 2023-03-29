@@ -16,4 +16,9 @@ bcw_missing
 table(ImputationData$V11)
 table(bcw_clean$V11)
 table(bcw_missing$V11)
+# mean/mode imputation
+# install.packages('mice')
+library('mice')
+set.seed(101)
+mean_impute <- mice(ImputationData, m = 5, meth = 'mean')
 
