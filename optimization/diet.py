@@ -1,41 +1,53 @@
-"""
-The Simplified Whiskas Model Python Formulation for the PuLP Modeller
-
-Authors: Antony Phillips, Dr Stuart Mitchell  2007
-"""
-
 # Import PuLP modeler functions
 from pulp import *
+import pandas as pd
+# crimeDate = read.table("/home/lilo/rcode/uscrime/uscrime.txt", header= TRUE, stringsAsFactors = F)
+data = pd.read_csv("/home/lilo/rcode/optimization/diet.csv")
+# print(data.head())
+data_c = data[0:66]
+# print(data_c)
+data_c = data_c.values.tolist()
+print(data_c)
+
 
 # Create the 'prob' variable to contain the problem data
-prob = LpProblem("The Whiskas Problem", LpMinimize)
+prob = LpProblem("ThedietProblem", LpMinimize)
 
-# The 2 variables Beef and Chicken are created with a lower limit of zero
-x1 = LpVariable("ChickenPercent", 0, None, LpInteger)
-x2 = LpVariable("BeefPercent", 0)
+# The variables are created 
+foods = [x[0] for x in data_c]
+calories = dict([(x[0], float(x[3])) for x in data_c])
+cholesterol = dict([(x[0], float(x[4])) for x in data_c])
+totalFat = dict([(x[0], float(x[5])) for x in data_c])
+sodium = dict([(x[0], float(x[6])) for x in data_c])
+carbs = dict([(x[0], float(x[7])) for x in data_c])
+fiber = dict([(x[0], float(x[8])) for x in data])
+protien = dict([(x[0], float(x[9])) for x in data])
+vitaminA = dict([(x[0], float(x[10])) for x in data])
+vitaminC = dict([(x[0], float(x[11])) for x in data])
+calcium = dict([(x[0], float(x[12])) for x in data])
+iron = dict([(x[0], float(x[13])) for x in data])
 
-# The objective function is added to 'prob' first
-prob += 0.013 * x1 + 0.008 * x2, "Total Cost of Ingredients per can"
+# # The objective function is added to 'prob' first
+problem99 += lpSum([cost[f] * foodVars[f] for f in foods])
 
-# The five constraints are entered
-prob += x1 + x2 == 100, "PercentagesSum"
-prob += 0.100 * x1 + 0.200 * x2 >= 8.0, "ProteinRequirement"
-prob += 0.080 * x1 + 0.100 * x2 >= 6.0, "FatRequirement"
-prob += 0.001 * x1 + 0.005 * x2 <= 2.0, "FibreRequirement"
-prob += 0.002 * x1 + 0.005 * x2 <= 0.4, "SaltRequirement"
+# # The constraints are entered
+for f in foods:
+    problem99 += foodVars[f] <= 10000 * vars[f]
+    problem99 += foodVars[f] >= .1 * vars[f]
 
-# The problem data is written to an .lp file
-prob.writeLP("WhiskasModel.lp")
 
-# The problem is solved using PuLP's choice of Solver
+# # The problem data is written to an .lp file
+prob.writeLP("diet.lp")
+
+# # The problem is solved using PuLP's choice of Solver
 prob.solve()
 
-# The status of the solution is printed to the screen
+# # The status of the solution is printed to the screen
 print("Status:", LpStatus[prob.status])
 
-# Each of the variables is printed with it's resolved optimum value
+# # Each of the variables is printed with it's resolved optimum value
 for v in prob.variables():
-    print(v.name, "=", v.varValue)
+     print(v.name, "=", v.varValue)
 
-# The optimised objective function value is printed to the screen
+# # The optimised objective function value is printed to the screen
 print("Total Cost of Ingredients per can = ", value(prob.objective))
